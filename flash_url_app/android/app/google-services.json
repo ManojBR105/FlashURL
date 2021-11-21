@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "685574484774",
+    "project_id": "flashurl",
+    "storage_bucket": "flashurl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685574484774:android:8bd8c9c61ce5533cd947e7",
+        "android_client_info": {
+          "package_name": "com.example.flash_url_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685574484774-64kamvepv1k80i69uhmptlank9qdu354.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZCzkSYKZaif4SXn-cHQOs6dPBc1dv_0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685574484774-64kamvepv1k80i69uhmptlank9qdu354.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
