@@ -141,7 +141,14 @@ class DatabaseService {
       } else {
         List<dynamic> urls = snap.data()["urls"];
         urls.add(shortURL);
-        await colRef.doc(shortURL).set({"url": longURL, "count": 0});
+        await colRef.doc(shortURL).set({
+          "url": longURL,
+          "count": 0,
+          "platform": {"windows": 0, "ios": 0, "android": 0, "unknown": 0},
+          "country": {"india": 0, "others": 0},
+          "browser": {"chrome": 0, "edge": 0, "unknown": 0},
+          "device": {"mobile": 0, "unknown": 0}
+        });
         await docRef.update({"urls": urls});
       }
       done();

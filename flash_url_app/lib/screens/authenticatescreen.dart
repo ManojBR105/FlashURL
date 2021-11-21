@@ -37,7 +37,7 @@ class _AuthenticateScrnState extends State<AuthenticateScrn> {
                 height: 20,
               ),
               Text(
-                "URL Shortening in a flash",
+                "url shortening in a flash",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
