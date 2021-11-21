@@ -1,14 +1,11 @@
 const functions = require("firebase-functions");
-const admin= require("firebase-admin");
+const admin = require("firebase-admin");
 admin.initializeApp();
 exports.redirectToLongURL = functions.https.onRequest((request, response) => {
   const shortUrl = request.headers["x-forwarded-url"].substr(1);
   const userAgent = request.headers["user-agent"];
   const countryCode = request.headers["x-country-code"];
   const secchua = request.headers["sec-ch-ua"];
-  const secchuamobile = request.headers["sec-ch-ua-mobile"];
-  const secchuaplatform = request.headers["sec-ch-ua-platform"];
-
   let redirectURL;
   let Ref;
   if (shortUrl.charAt(0) >= "0" && shortUrl.charAt(0) <= "9") {
@@ -27,67 +24,97 @@ exports.redirectToLongURL = functions.https.onRequest((request, response) => {
   Ref.doc(shortUrl).update({
     count: admin.firestore.FieldValue.increment(1),
   });
-  if (typeof countryCode != "undefined" && countryCode == "IN") {
+  functions.logger.info(userAgent);
+  functions.logger.info(secchua);
+  // country details
+  if (typeof countryCode != "undefined") {
     Ref.doc(shortUrl).update({
-      ["country.india"]: admin.firestore.FieldValue.increment(1),
+      ["country."+countryCode]: admin.firestore.FieldValue.increment(1),
     });
   } else {
     Ref.doc(shortUrl).update({
       ["country.others"]: admin.firestore.FieldValue.increment(1),
     });
   }
-  if (typeof secchua != "undefined") {
-    if (secchua.includes("Google Chrome")) {
+  if (typeof userAgent != "undefined") {
+    // Device details
+    if (userAgent.includes("Mobile")) {
       Ref.doc(shortUrl).update({
-        ["browser.chrome"]: admin.firestore.FieldValue.increment(1),
+        ["device.mobile"]: admin.firestore.FieldValue.increment(1),
       });
-    } else if (secchua.includes("Microsoft Edge")) {
+    } else {
+      Ref.doc(shortUrl).update({
+        ["device.others"]: admin.firestore.FieldValue.increment(1),
+      });
+    }
+    // Browser Details
+    if (userAgent.includes("Edg/")) {
       Ref.doc(shortUrl).update({
         ["browser.edge"]: admin.firestore.FieldValue.increment(1),
       });
-    } else {
+    } else if (userAgent.includes("OPR/")) {
       Ref.doc(shortUrl).update({
-        ["browser.unknown"]: admin.firestore.FieldValue.increment(1),
+        ["browser.opera"]: admin.firestore.FieldValue.increment(1),
       });
+    } else if (userAgent.includes("Firefox/")) {
+      Ref.doc(shortUrl).update({
+        ["browser.firefox"]: admin.firestore.FieldValue.increment(1),
+      });
+    } else if (userAgent.includes("Safari/") &&
+    !userAgent.includes("Chrome/")) {
+      Ref.doc(shortUrl).update({
+        ["browser.safari"]: admin.firestore.FieldValue.increment(1),
+      });
+    } else {
+      if (typeof secchua != "undefined" &&
+      secchua.includes("Google Chrome")) {
+        Ref.doc(shortUrl).update({
+          ["browser.chrome"]: admin.firestore.FieldValue.increment(1),
+        });
+      } else {
+        Ref.doc(shortUrl).update({
+          ["browser.others"]: admin.firestore.FieldValue.increment(1),
+        });
+      }
     }
-  } else {
-    Ref.doc(shortUrl).update({
-      ["browser.unknown"]: admin.firestore.FieldValue.increment(1),
-    });
-  }
-  if (typeof secchuamobile != "undefined" && secchuamobile.includes("1")) {
-    Ref.doc(shortUrl).update({
-      ["device.mobile"]: admin.firestore.FieldValue.increment(1),
-    });
-  } else {
-    Ref.doc(shortUrl).update({
-      ["device.unknown"]: admin.firestore.FieldValue.increment(1),
-    });
-  }
-  if (typeof secchuaplatform != "undefined") {
-    if (secchuaplatform.includes("Android")) {
+    // platform details
+    if (userAgent.includes("Android")) {
       Ref.doc(shortUrl).update({
         ["platform.android"]: admin.firestore.FieldValue.increment(1),
       });
-    } else if (secchuaplatform.includes("Windows")) {
+    } else if (userAgent.includes("Ubuntu")) {
+      Ref.doc(shortUrl).update({
+        ["platform.ubuntu"]: admin.firestore.FieldValue.increment(1),
+      });
+    } else if (userAgent.includes("Linux")) {
+      Ref.doc(shortUrl).update({
+        ["platform.linux"]: admin.firestore.FieldValue.increment(1),
+      });
+    } else if (userAgent.includes("Windows")) {
       Ref.doc(shortUrl).update({
         ["platform.windows"]: admin.firestore.FieldValue.increment(1),
       });
+    } else if (userAgent.includes("Macintosh")) {
+      Ref.doc(shortUrl).update({
+        ["platform.mac"]: admin.firestore.FieldValue.increment(1),
+      });
+    } else if (userAgent.includes("iPhone")) {
+      Ref.doc(shortUrl).update({
+        ["platform.iphone"]: admin.firestore.FieldValue.increment(1),
+      });
+    } else if (userAgent.includes("iPad")) {
+      Ref.doc(shortUrl).update({
+        ["platform.ipad"]: admin.firestore.FieldValue.increment(1),
+      });
     } else {
-      if (typeof userAgent != "undefined") {
-        if (userAgent.includes("iPhone")) {
-          Ref.doc(shortUrl).update({
-            ["platform.ios"]: admin.firestore.FieldValue.increment(1),
-          });
-        } else {
-          Ref.doc(shortUrl).update({
-            ["platform.others"]: admin.firestore.FieldValue.increment(1),
-          });
-        }
-      }
+      Ref.doc(shortUrl).update({
+        ["platform.others"]: admin.firestore.FieldValue.increment(1),
+      });
     }
   } else {
     Ref.doc(shortUrl).update({
+      ["device.others"]: admin.firestore.FieldValue.increment(1),
+      ["browser.others"]: admin.firestore.FieldValue.increment(1),
       ["platform.others"]: admin.firestore.FieldValue.increment(1),
     });
   }

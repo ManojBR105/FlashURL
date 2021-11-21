@@ -30,6 +30,7 @@ dependencies:
   toast: ^0.1.5
   flutter_spinkit: ^4.1.2+1
   url_launcher: 
+  charts_flutter: ^0.10.0
 
 
   # The following adds the Cupertino Icons font to your application.

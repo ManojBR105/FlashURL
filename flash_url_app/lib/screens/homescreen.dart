@@ -94,6 +94,7 @@ class _HomeScrnState extends State<HomeScrn> {
                           ],
                         ),
                       ),
+                Divider(),
                 snapshot.data == null
                     ? Container()
                     : Expanded(
@@ -278,10 +279,11 @@ class _HomeScrnState extends State<HomeScrn> {
   Future<void> autoShorten() async {
     const String base62Chars =
         "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const startTime = 1637456213;
+    const startTime = 162114882782;
     longURL = longURLController.text;
     if (_longformkey.currentState.validate()) {
       var generator = (DateTime.now().millisecondsSinceEpoch ~/ 10) - startTime;
+      print(generator);
       String firstChar = base62Chars[new Random().nextInt(9)];
       String mainChars = "";
       while (generator > 0) {

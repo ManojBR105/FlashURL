@@ -14,19 +14,6 @@ class MyUser {
   }
 }
 
-class Patient {
-  final String name;
-  final String email;
-  final String uid;
-  Patient({this.name, this.email, this.uid});
-}
-
-class Records {
-  final String recID;
-  final String uid;
-  Records({this.recID, this.uid});
-}
-
 class Authenticate {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -144,10 +131,10 @@ class DatabaseService {
         await colRef.doc(shortURL).set({
           "url": longURL,
           "count": 0,
-          "platform": {"windows": 0, "ios": 0, "android": 0, "unknown": 0},
-          "country": {"india": 0, "others": 0},
-          "browser": {"chrome": 0, "edge": 0, "unknown": 0},
-          "device": {"mobile": 0, "unknown": 0}
+          "platform": {"windows": 0, "linux": 0, "ubuntu": 0, "mac": 0, "iphone": 0, "ipad": 0, "android": 0, "others": 0},
+          "country": {"IN": 0},
+          "browser": {"chrome": 0, "edge": 0, "safari": 0, "firefox": 0, "opera": 0, "others": 0},
+          "device": {"mobile": 0, "others": 0}
         });
         await docRef.update({"urls": urls});
       }

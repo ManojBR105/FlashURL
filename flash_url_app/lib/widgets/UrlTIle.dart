@@ -1,8 +1,11 @@
 import 'package:flash_url_app/models/firebase.dart';
+import 'package:flash_url_app/screens/dashboardscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class UrlTile extends StatelessWidget {
   final String url;
+  final String baseURL = "https://flashurl.web.app/";
   UrlTile(this.url);
 
   @override
@@ -18,8 +21,21 @@ class UrlTile extends StatelessWidget {
                   trailing: data["count"] != null
                       ? Text(data["count"].toString())
                       : Text("NaN"),
-                  subtitle:
-                      data["url"] != null ? Text(data["url"]) : Text("NaN"),
+                  subtitle: data["url"] != null
+                      ? Text(
+                          data["url"],
+                          maxLines: 2,
+                        )
+                      : Text("NaN"),
+                  onLongPress: () {
+                    Clipboard.setData(ClipboardData(text: "$baseURL$url"));
+                  },
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DashboardScrn(url)));
+                  },
                 );
         });
   }
