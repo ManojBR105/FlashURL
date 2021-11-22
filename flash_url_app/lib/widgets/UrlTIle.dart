@@ -2,6 +2,7 @@ import 'package:flash_url_app/models/firebase.dart';
 import 'package:flash_url_app/screens/dashboardscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:toast/toast.dart';
 
 class UrlTile extends StatelessWidget {
   final String url;
@@ -29,6 +30,8 @@ class UrlTile extends StatelessWidget {
                       : Text("NaN"),
                   onLongPress: () {
                     Clipboard.setData(ClipboardData(text: "$baseURL$url"));
+                    Toast.show("link copied to clipboard", context,
+                        duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
                   },
                   onTap: () {
                     Navigator.push(

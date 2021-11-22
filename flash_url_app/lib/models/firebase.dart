@@ -39,7 +39,7 @@ class Authenticate {
       Navigator.pop(context);
     } catch (e) {
       Toast.show(e.message.toString(), context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
     }
   }
 
@@ -54,7 +54,7 @@ class Authenticate {
     } catch (e) {
       print(e.toString());
       Toast.show(e.message.toString(), context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
     }
   }
 
@@ -65,7 +65,7 @@ class Authenticate {
     } catch (e) {
       print(e.toString());
       Toast.show(e.message.toString(), context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
       return null;
     }
   }
@@ -131,9 +131,25 @@ class DatabaseService {
         await colRef.doc(shortURL).set({
           "url": longURL,
           "count": 0,
-          "platform": {"windows": 0, "linux": 0, "ubuntu": 0, "mac": 0, "iphone": 0, "ipad": 0, "android": 0, "others": 0},
+          "platform": {
+            "windows": 0,
+            "linux": 0,
+            "ubuntu": 0,
+            "mac": 0,
+            "iphone": 0,
+            "ipad": 0,
+            "android": 0,
+            "others": 0
+          },
           "country": {"IN": 0},
-          "browser": {"chrome": 0, "edge": 0, "safari": 0, "firefox": 0, "opera": 0, "others": 0},
+          "browser": {
+            "chrome": 0,
+            "edge": 0,
+            "safari": 0,
+            "firefox": 0,
+            "opera": 0,
+            "others": 0
+          },
           "device": {"mobile": 0, "others": 0}
         });
         await docRef.update({"urls": urls});
@@ -142,7 +158,7 @@ class DatabaseService {
     } catch (e) {
       print(e.toString());
       Toast.show(e.toString(), context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
     }
   }
 }
