@@ -148,8 +148,11 @@ class _HomeScrnState extends State<HomeScrn> {
                 if (userData != null)
                   currState = Status.CUSTOM;
                 else
-                  longURLController.text =
-                      "You are not a registered user, please register to use this service.";
+                  Toast.show(
+                      "This feature is only for registered users, please register and try again",
+                      context,
+                      duration: Toast.LENGTH_LONG,
+                      gravity: Toast.CENTER);
                 setState(() {});
               },
               child: Text("Try Custom Shorten"),
